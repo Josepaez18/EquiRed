@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dona en EquiRed y ayuda a reducir la desigualdad. Tu generosidad transforma vidas y crea oportunidades para personas vulnerables.">
+    <title>Donaciones — EquiRed</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar__container">
+            <a href="index.html" class="navbar__brand" id="brand-link">
+                <img src="img/logo.png" alt="EquiRed" class="navbar__brand-logo">
+                EquiRed
+            </a>
+            <div class="navbar__links" id="nav-links">
+                <a href="principal.html" class="navbar__link" id="nav-inicio">Inicio</a>
+                <a href="empleos.html" class="navbar__link" id="nav-empleos">Empleos</a>
+                <a href="donaciones.html" class="navbar__link" id="nav-donar">Donar</a>
+                <a href="asesorias.html" class="navbar__link" id="nav-asesorias">Asesorías</a>
+            </div>
+            <div class="navbar__auth" id="navbar-auth"></div>
+            <button class="navbar__mobile-toggle" id="mobile-toggle" aria-label="Menú">☰</button>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="page-content" id="donaciones-page">
+        <div class="page-header fade-in">
+            <h1>💝 Donaciones Solidarias</h1>
+            <p>Tu generosidad puede transformar vidas. Cada donación contribuye a crear un mundo más justo e inclusivo.</p>
+        </div>
+
+        <div class="donation-layout">
+            <!-- Formulario de donación -->
+            <div class="donation-form-card fade-in">
+                <h2>Hacer una donación</h2>
+                <p>Selecciona un monto o ingresa uno personalizado. Todas las donaciones apoyan programas de inclusión social.</p>
+
+                <div class="donation-amounts" id="amount-buttons">
+                    <button class="donation-amount-btn" onclick="selectAmount(10)" id="btn-amount-10">$10</button>
+                    <button class="donation-amount-btn" onclick="selectAmount(25)" id="btn-amount-25">$25</button>
+                    <button class="donation-amount-btn" onclick="selectAmount(50)" id="btn-amount-50">$50</button>
+                    <button class="donation-amount-btn" onclick="selectAmount(100)" id="btn-amount-100">$100</button>
+                    <button class="donation-amount-btn" onclick="selectAmount(250)" id="btn-amount-250">$250</button>
+                    <button class="donation-amount-btn" onclick="selectAmount(500)" id="btn-amount-500">$500</button>
+                </div>
+
+                <form id="donation-form" novalidate>
+                    <div class="form-group">
+                        <label class="form-label" for="donation-amount">Monto personalizado (USD)</label>
+                        <div class="form-input-icon">
+                            <span class="form-input-icon__icon">💰</span>
+                            <input type="number" class="form-input" id="donation-amount" placeholder="0.00" min="1" max="100000" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="donation-method">Método de pago</label>
+                        <select class="form-input" id="donation-method">
+                            <option value="Transferencia">Transferencia bancaria</option>
+                            <option value="Tarjeta de crédito">Tarjeta de crédito</option>
+                            <option value="PayPal">PayPal</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="donation-message">Mensaje (opcional)</label>
+                        <textarea class="form-input" id="donation-message" rows="3" placeholder="Un mensaje para acompañar tu donación..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--full btn--lg" id="btn-donate-submit">
+                        💝 Donar ahora
+                    </button>
+                </form>
+
+                <!-- Historial del usuario -->
+                <div id="my-donations" style="margin-top: var(--space-8); display: none;">
+                    <h3 style="font-size: var(--font-lg); font-weight: 700; margin-bottom: var(--space-4);">Mis donaciones</h3>
+                    <div class="history-list" id="donations-history"></div>
+                </div>
+            </div>
+
+            <!-- Sidebar con stats -->
+            <div class="donation-stats fade-in">
+                <div class="donation-stat-card" id="stat-total-amount">
+                    <div class="donation-stat-card__icon">💰</div>
+                    <div class="donation-stat-card__value" id="stat-monto-total">$0</div>
+                    <div class="donation-stat-card__label">Total recaudado</div>
+                </div>
+
+                <div class="donation-stat-card" id="stat-total-donations">
+                    <div class="donation-stat-card__icon">🎁</div>
+                    <div class="donation-stat-card__value" id="stat-num-donaciones">0</div>
+                    <div class="donation-stat-card__label">Donaciones realizadas</div>
+                </div>
+
+                <div class="donation-stat-card" id="stat-total-donors">
+                    <div class="donation-stat-card__icon">❤️</div>
+                    <div class="donation-stat-card__value" id="stat-num-donantes">0</div>
+                    <div class="donation-stat-card__label">Donantes únicos</div>
+                </div>
+
+                <!-- Donaciones recientes -->
+                <div class="recent-donations" id="recent-donations-card">
+                    <h3>Donaciones recientes</h3>
+                    <div id="recent-donations-list">
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+
+                <!-- Impacto -->
+                <div class="card" style="background: var(--gradient-subtle); border: 1px solid var(--primary-lighter);">
+                    <h3 style="font-size: var(--font-lg); font-weight: 700; color: var(--primary-dark); margin-bottom: var(--space-3);">
+                        📊 ¿A dónde va tu donación?
+                    </h3>
+                    <ul style="display: flex; flex-direction: column; gap: var(--space-3);">
+                        <li style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-sm); color: var(--gray-600);">
+                            <span style="color: var(--success);">✓</span> Capacitación laboral para jóvenes
+                        </li>
+                        <li style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-sm); color: var(--gray-600);">
+                            <span style="color: var(--success);">✓</span> Asesoría psicológica gratuita
+                        </li>
+                        <li style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-sm); color: var(--gray-600);">
+                            <span style="color: var(--success);">✓</span> Apoyo jurídico para víctimas
+                        </li>
+                        <li style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-sm); color: var(--gray-600);">
+                            <span style="color: var(--success);">✓</span> Programas de inclusión digital
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+    <script src="js/donaciones.js"></script>
+</body>
+</html>

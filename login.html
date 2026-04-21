@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Inicia sesión en EquiRed para acceder a oportunidades laborales inclusivas, asesoría profesional y una comunidad solidaria.">
+    <title>Ingresar — EquiRed</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar__container">
+            <a href="index.html" class="navbar__brand" id="brand-link">
+                <img src="img/logo.png" alt="EquiRed" class="navbar__brand-logo">
+                EquiRed
+            </a>
+            <div class="navbar__links" id="nav-links">
+                <a href="principal.html" class="navbar__link" id="nav-inicio">Inicio</a>
+                <a href="empleos.html" class="navbar__link" id="nav-empleos">Empleos</a>
+                <a href="donaciones.html" class="navbar__link" id="nav-donar">Donar</a>
+                <a href="asesorias.html" class="navbar__link" id="nav-asesorias">Asesorías</a>
+            </div>
+            <div class="navbar__auth" id="navbar-auth"></div>
+            <button class="navbar__mobile-toggle" id="mobile-toggle" aria-label="Menú">☰</button>
+        </div>
+    </nav>
+
+    <!-- LOGIN -->
+    <main class="auth-page" id="login-page">
+        <div class="auth-card">
+            <div class="auth-card__header">
+                <div class="auth-card__icon">👤</div>
+                <h1 class="auth-card__title">Ingresar a EquiRed</h1>
+                <p class="auth-card__subtitle">Bienvenido de nuevo. Ingresa tus credenciales para continuar.</p>
+            </div>
+
+            <form id="login-form" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="login-email">Correo electrónico</label>
+                    <div class="form-input-icon">
+                        <span class="form-input-icon__icon">✉</span>
+                        <input type="email" class="form-input" id="login-email" placeholder="tu@email.com" required autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="login-password">Contraseña</label>
+                    <div class="form-input-icon">
+                        <span class="form-input-icon__icon">🔒</span>
+                        <input type="password" class="form-input" id="login-password" placeholder="••••••••" required autocomplete="current-password">
+                    </div>
+                </div>
+
+                <div style="text-align: right; margin-bottom: var(--space-5);">
+                    <a href="#" style="font-size: var(--font-sm); color: var(--primary);" id="forgot-password">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button type="submit" class="btn btn--primary btn--full btn--lg" id="btn-login-submit">
+                    Ingresar
+                </button>
+            </form>
+
+            <div class="auth-card__divider">¿No tienes cuenta?</div>
+
+            <a href="registro.html" class="btn btn--outline btn--full" id="btn-go-register">
+                Crear cuenta gratis
+            </a>
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

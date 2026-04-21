@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Feed social de EquiRed. Comparte historias de superación, publica contenido sobre inclusión y conecta con la comunidad.">
+    <title>Inicio — EquiRed</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar__container">
+            <a href="index.html" class="navbar__brand" id="brand-link">
+                <img src="img/logo.png" alt="EquiRed" class="navbar__brand-logo">
+                EquiRed
+            </a>
+            <div class="navbar__links" id="nav-links">
+                <a href="principal.html" class="navbar__link" id="nav-inicio">Inicio</a>
+                <a href="empleos.html" class="navbar__link" id="nav-empleos">Empleos</a>
+                <a href="donaciones.html" class="navbar__link" id="nav-donar">Donar</a>
+                <a href="asesorias.html" class="navbar__link" id="nav-asesorias">Asesorías</a>
+            </div>
+            <div class="navbar__auth" id="navbar-auth"></div>
+            <button class="navbar__mobile-toggle" id="mobile-toggle" aria-label="Menú">☰</button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="feed-page">
+        <!-- Banner motivacional -->
+        <div class="feed-banner" id="feed-banner">
+            <h2>Construyendo Igualdad Juntos</h2>
+            <p>
+                Buscamos construir una sociedad más justa donde todas las personas tengan las mismas oportunidades, 
+                sin importar su origen, condición económica, género o cultura. Cada mensaje y publicación es una 
+                invitación a creer en un futuro más inclusivo.
+            </p>
+        </div>
+
+        <!-- Nueva publicación -->
+        <div class="new-post" id="new-post-box" style="display: none;">
+            <div class="new-post__top">
+                <div class="new-post__avatar" id="new-post-avatar">?</div>
+                <textarea class="new-post__input" id="new-post-content" placeholder="¿Qué quieres compartir hoy?" rows="3"></textarea>
+            </div>
+            <div class="new-post__actions">
+                <div class="new-post__media">
+                    <button class="new-post__media-btn" id="btn-add-photo" type="button">📷 Foto</button>
+                    <button class="new-post__media-btn" id="btn-add-video" type="button">🎥 Video</button>
+                </div>
+                <button class="btn btn--primary btn--sm" id="btn-publish" onclick="createPost()">Publicar</button>
+            </div>
+        </div>
+
+        <!-- Login prompt -->
+        <div class="card" id="login-prompt" style="text-align: center; padding: 2rem; margin-bottom: 1.25rem; display: none;">
+            <p style="color: var(--gray-500); margin-bottom: 1rem;">Inicia sesión para compartir y participar en la comunidad.</p>
+            <a href="login.html" class="btn btn--primary btn--sm" id="btn-login-prompt">Ingresar</a>
+        </div>
+
+        <!-- Feed de publicaciones -->
+        <div id="feed-container">
+            <div class="loading-spinner" id="feed-loading"></div>
+        </div>
+
+        <!-- Botón cargar más -->
+        <div style="text-align: center; margin-top: var(--space-4);" id="load-more-container" style="display: none;">
+            <button class="btn btn--outline" id="btn-load-more" onclick="loadMorePosts()" style="display: none;">
+                Cargar más publicaciones
+            </button>
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+    <script src="js/principal.js"></script>
+</body>
+</html>

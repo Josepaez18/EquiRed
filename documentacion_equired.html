@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación del Código — EquiRed</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1a1a2e;
+            background: #fff;
+            line-height: 1.8;
+            font-size: 11pt;
+        }
+
+        @media print {
+            body { font-size: 10pt; }
+            .page-break { page-break-before: always; }
+            .no-print { display: none; }
+            h2 { page-break-before: always; }
+            h2:first-of-type { page-break-before: avoid; }
+            pre { page-break-inside: avoid; }
+            .file-section { page-break-inside: avoid; }
+        }
+
+        .cover {
+            text-align: center;
+            padding: 120px 40px 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .cover-icon { font-size: 80px; margin-bottom: 20px; }
+        .cover h1 { font-size: 42px; font-weight: 800; margin-bottom: 10px; }
+        .cover .subtitle { font-size: 22px; opacity: 0.9; margin-bottom: 30px; }
+        .cover .meta { font-size: 14px; opacity: 0.75; line-height: 2; }
+        .cover .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        h2 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #667eea;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            font-size: 19px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-top: 30px;
+            margin-bottom: 12px;
+        }
+
+        h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #444;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        p { margin-bottom: 12px; }
+
+        .file-section {
+            background: #f8f9ff;
+            border: 1px solid #e0e4f5;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 18px 0;
+        }
+
+        .file-path {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #667eea;
+            background: #eef0ff;
+            padding: 4px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        pre {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 16px 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10pt;
+            line-height: 1.6;
+            margin: 10px 0 14px;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: #eef0ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10pt;
+            color: #764ba2;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        ul, ol {
+            margin: 8px 0 14px 24px;
+        }
+        li { margin-bottom: 6px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 10pt;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background: #667eea;
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:nth-child(even) { background: #f8f9ff; }
+
+        .toc {
+            background: #f8f9ff;
+            border: 1px solid #e0e4f5;
+            border-radius: 10px;
+            padding: 24px 30px;
+            margin: 20px 0 30px;
+        }
+        .toc h3 { margin-top: 0; color: #667eea; }
+        .toc ol { margin-left: 20px; }
+        .toc li { margin-bottom: 4px; }
+        .toc a { color: #667eea; text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 14px 0;
+            font-size: 10pt;
+        }
+
+        .info-box {
+            background: #e8f4fd;
+            border-left: 4px solid #2196F3;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 14px 0;
+            font-size: 10pt;
+        }
+
+        .diagram {
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10pt;
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 16px 0;
+            line-height: 1.4;
+        }
+
+        .highlight { color: #667eea; font-weight: 600; }
+        strong { color: #1a1a2e; }
+    </style>
+</head>
+<body>
+
+<!-- ==================== PORTADA ==================== -->
+<div class="cover page-break">
+    <div class="cover-icon">🤝</div>
+    <h1>EquiRed</h1>
+    <div class="subtitle">Documentación Completa del Código Fuente</div>
+    <div class="meta">
+        Plataforma social para la reducción de desigualdades (ODS 10)<br>
+        Proyecto de Desarrollo Web — 2026<br><br>
+        <strong>Tecnologías:</strong> PHP · MySQL · JavaScript · HTML · CSS
+    </div>
+    <div class="badge">📄 Documento generado automáticamente</div>
+</div>
+
+<!-- ==================== CONTENIDO ==================== -->
+<div class="container">
+
+<!-- TABLA DE CONTENIDOS -->
+<div class="toc">
+    <h3>📑 Tabla de Contenidos</h3>
+    <ol>
+        <li><a href="#intro">Introducción y Visión General</a></li>
+        <li><a href="#estructura">Estructura del Proyecto</a></li>
+        <li><a href="#arquitectura">Arquitectura de la Aplicación</a></li>
+        <li><a href="#bd">Base de Datos (SQL)</a></li>
+        <li><a href="#api-config">API — Configuración (config.php)</a></li>
+        <li><a href="#api-auth">API — Autenticación (auth.php)</a></li>
+        <li><a href="#api-publicaciones">API — Publicaciones (publicaciones.php)</a></li>
+        <li><a href="#api-empleos">API — Empleos (empleos.php)</a></li>
+        <li><a href="#api-donaciones">API — Donaciones (donaciones.php)</a></li>
+        <li><a href="#api-asesorias">API — Asesorías (asesorias.php)</a></li>
+        <li><a href="#html-pages">Páginas HTML (Frontend)</a></li>
+        <li><a href="#js-app">JavaScript — App Global (app.js)</a></li>
+        <li><a href="#js-landing">JavaScript — Landing Page (landing.js)</a></li>
+        <li><a href="#js-auth">JavaScript — Autenticación (auth.js)</a></li>
+        <li><a href="#js-principal">JavaScript — Feed Social (principal.js)</a></li>
+        <li><a href="#js-empleos">JavaScript — Empleos (empleos.js)</a></li>
+        <li><a href="#js-donaciones">JavaScript — Donaciones (donaciones.js)</a></li>
+        <li><a href="#js-asesorias">JavaScript — Asesorías (asesorias.js)</a></li>
+        <li><a href="#css">Estilos CSS (styles.css)</a></li>
+        <li><a href="#flujo">Flujo Completo de la Aplicación</a></li>
+    </ol>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="intro">1. Introducción y Visión General</h2>
+
+<p><strong>EquiRed</strong> es una plataforma web social diseñada para contribuir al <strong>Objetivo de Desarrollo Sostenible 10 (ODS 10)</strong>: la reducción de las desigualdades. La plataforma conecta a personas vulnerables con oportunidades de empleo, asesoría profesional (psicológica y jurídica) y apoyo solidario a través de donaciones.</p>
+
+<h3>Características principales</h3>
+<ul>
+    <li><strong>Feed Social:</strong> Los usuarios pueden compartir historias de superación, dar "me gusta" y comentar publicaciones.</li>
+    <li><strong>Bolsa de Empleo Inclusivo:</strong> Empresas publican ofertas laborales y los usuarios pueden postularse.</li>
+    <li><strong>Sistema de Donaciones:</strong> Los donantes contribuyen económicamente a programas de inclusión.</li>
+    <li><strong>Asesorías Profesionales:</strong> Psicólogos y abogados ofrecen orientación a personas que han sufrido discriminación.</li>
+    <li><strong>Sistema de Autenticación:</strong> Registro e inicio de sesión con diferentes roles de usuario.</li>
+</ul>
+
+<h3>Roles de usuario</h3>
+<table>
+    <tr><th>Rol</th><th>Descripción</th><th>Permisos especiales</th></tr>
+    <tr><td><code>beneficiario</code></td><td>Persona que busca oportunidades y apoyo</td><td>Postularse a empleos, solicitar asesorías</td></tr>
+    <tr><td><code>empresa</code></td><td>Organización que ofrece empleo inclusivo</td><td>Publicar ofertas de empleo</td></tr>
+    <tr><td><code>profesional</code></td><td>Psicólogo/a o abogado/a</td><td>Recibir y gestionar solicitudes de asesoría</td></tr>
+    <tr><td><code>donante</code></td><td>Persona que contribuye económicamente</td><td>Realizar donaciones y ver historial</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2 id="estructura" class="page-break">2. Estructura del Proyecto</h2>
+
+<div class="diagram">
+<pre style="text-align: left; display: inline-block; background: #1e1e2e; padding: 20px; border-radius: 10px;">
+EquiRed/
+├── index.html              ← Página de inicio (landing page)
+├── login.html              ← Página de inicio de sesión
+├── registro.html           ← Página de registro de usuario
+├── principal.html          ← Feed social (página principal)
+├── empleos.html            ← Bolsa de empleo inclusivo
+├── donaciones.html         ← Sistema de donaciones
+├── asesorias.html          ← Asesorías profesionales
+│
+├── css/
+│   └── styles.css          ← Todos los estilos de la aplicación
+│
+├── js/
+│   ├── app.js              ← Lógica global compartida
+│   ├── landing.js          ← Animaciones del landing page
+│   ├── auth.js             ← Lógica de login y registro
+│   ├── principal.js        ← Lógica del feed social
+│   ├── empleos.js          ← Lógica de la bolsa de empleo
+│   ├── donaciones.js       ← Lógica de donaciones
+│   └── asesorias.js        ← Lógica de asesorías
+│
+├── api/
+│   ├── config.php          ← Configuración de BD y utilidades
+│   ├── auth.php            ← Endpoint de autenticación
+│   ├── publicaciones.php   ← Endpoint de publicaciones/feed
+│   ├── empleos.php         ← Endpoint de empleos
+│   ├── donaciones.php      ← Endpoint de donaciones
+│   └── asesorias.php       ← Endpoint de asesorías
+│
+└── sql/
+    └── equired.sql         ← Script de creación de la BD
+</pre>
+</div>
+
+<p>La aplicación sigue una arquitectura de <strong>3 capas</strong>:</p>
+<ul>
+    <li><strong>Frontend (HTML + CSS + JS):</strong> Interfaz visual que el usuario ve en el navegador.</li>
+    <li><strong>Backend / API (PHP):</strong> Lógica del servidor que procesa las peticiones.</li>
+    <li><strong>Base de Datos (MySQL):</strong> Almacena toda la información persistente.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="arquitectura" class="page-break">3. Arquitectura de la Aplicación</h2>
+
+<div class="diagram">
+<pre style="text-align: center; display: inline-block; background: #1e1e2e; padding: 20px; border-radius: 10px;">
+┌─────────────────────────────────────────────────┐
+│               NAVEGADOR (Frontend)               │
+│                                                   │
+│  HTML Pages ──→ CSS Styles ──→ JS Scripts         │
+│  (estructura)   (diseño)       (interactividad)   │
+│                                                   │
+│  index.html, login.html, registro.html,           │
+│  principal.html, empleos.html, etc.               │
+└──────────────────┬──────────────────────────────┘
+                   │ fetch() (AJAX / JSON)
+                   ▼
+┌─────────────────────────────────────────────────┐
+│              SERVIDOR (Backend PHP)               │
+│                                                   │
+│  config.php ─→ Conexión PDO + Utilidades          │
+│  auth.php   ─→ Login / Registro / Sesión          │
+│  publicaciones.php ─→ CRUD del feed               │
+│  empleos.php ─→ Gestión de empleos                │
+│  donaciones.php ─→ Registro de donaciones         │
+│  asesorias.php ─→ Solicitudes de asesoría         │
+└──────────────────┬──────────────────────────────┘
+                   │ PDO (consultas SQL)
+                   ▼
+┌─────────────────────────────────────────────────┐
+│            BASE DE DATOS (MySQL)                  │
+│                                                   │
+│  equired_db                                       │
+│  ├── usuarios        (datos de cuentas)           │
+│  ├── publicaciones   (posts del feed)             │
+│  ├── likes           (me gusta)                   │
+│  ├── comentarios     (comentarios en posts)       │
+│  ├── empleos         (ofertas de trabajo)         │
+│  ├── postulaciones   (candidaturas)               │
+│  ├── donaciones      (contribuciones)             │
+│  └── asesorias       (solicitudes de ayuda)       │
+└─────────────────────────────────────────────────┘
+</pre>
+</div>
+
+<p><strong>Comunicación Frontend ↔ Backend:</strong> El frontend envía peticiones HTTP asíncronas (usando <code>fetch()</code>) al backend PHP. Los datos se intercambian en formato <strong>JSON</strong>. El backend responde siempre con un objeto JSON con esta estructura:</p>
+
+<pre><code>// Respuesta exitosa:
+{ "success": true, "data": { ... } }
+
+// Respuesta de error:
+{ "success": false, "error": "Mensaje de error" }
+</code></pre>
+
+<!-- ============================================================ -->
+<h2 id="bd" class="page-break">4. Base de Datos (equired.sql)</h2>
+
+<div class="file-section">
+    <span class="file-path">sql/equired.sql</span>
+    <p>Este archivo contiene el script SQL completo para crear la base de datos, todas sus tablas y los datos de ejemplo.</p>
+</div>
+
+<h3>4.1. Creación de la base de datos</h3>
+<pre><code>CREATE DATABASE IF NOT EXISTS equired_db 
+CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;</code></pre>
+<p>Crea la base de datos <code>equired_db</code> usando la codificación <strong>utf8mb4</strong>, que soporta emojis y caracteres especiales (tildes, ñ, etc.).</p>
+
+<h3>4.2. Tabla: <code>usuarios</code></h3>
+<pre><code>CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    tipo_usuario ENUM('beneficiario','empresa','profesional','donante') NOT NULL DEFAULT 'beneficiario',
+    bio TEXT DEFAULT NULL,
+    avatar_url VARCHAR(255) DEFAULT NULL,
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+
+<table>
+    <tr><th>Campo</th><th>Tipo</th><th>Descripción</th></tr>
+    <tr><td><code>id</code></td><td>INT AUTO_INCREMENT</td><td>Identificador único del usuario, se genera automáticamente.</td></tr>
+    <tr><td><code>nombre</code></td><td>VARCHAR(100)</td><td>Nombre completo del usuario.</td></tr>
+    <tr><td><code>email</code></td><td>VARCHAR(150) UNIQUE</td><td>Correo electrónico, no puede repetirse.</td></tr>
+    <tr><td><code>password_hash</code></td><td>VARCHAR(255)</td><td>Contraseña encriptada con bcrypt (nunca se guarda en texto plano).</td></tr>
+    <tr><td><code>tipo_usuario</code></td><td>ENUM</td><td>Rol del usuario: beneficiario, empresa, profesional o donante.</td></tr>
+    <tr><td><code>bio</code></td><td>TEXT</td><td>Biografía o descripción personal.</td></tr>
+    <tr><td><code>avatar_url</code></td><td>VARCHAR(255)</td><td>URL de la foto de perfil.</td></tr>
+    <tr><td><code>fecha_registro</code></td><td>DATETIME</td><td>Fecha y hora en que se creó la cuenta.</td></tr>
+</table>
+
+<h3>4.3. Tabla: <code>publicaciones</code></h3>
+<pre><code>CREATE TABLE IF NOT EXISTS publicaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    contenido TEXT NOT NULL,
+    imagen_url VARCHAR(255) DEFAULT NULL,
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);</code></pre>
+<p>Almacena las publicaciones del feed social. Cada publicación pertenece a un usuario (<code>usuario_id</code>). El <code>ON DELETE CASCADE</code> significa que si se elimina un usuario, automáticamente se eliminan todas sus publicaciones.</p>
+
+<h3>4.4. Tabla: <code>likes</code></h3>
+<pre><code>CREATE TABLE IF NOT EXISTS likes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    publicacion_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_like (publicacion_id, usuario_id),
+    FOREIGN KEY (publicacion_id) REFERENCES publicaciones(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);</code></pre>
+<p>Registra los "me gusta" en publicaciones. La restricción <code>UNIQUE KEY</code> asegura que un usuario solo puede dar un "me gusta" por publicación.</p>
+
+<h3>4.5. Tabla: <code>comentarios</code></h3>
+<pre><code>CREATE TABLE IF NOT EXISTS comentarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    publicacion_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    contenido TEXT NOT NULL,
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (publicacion_id) REFERENCES publicaciones(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);</code></pre>
+<p>Almacena los comentarios que los usuarios hacen en las publicaciones. Cada comentario está ligado a una publicación y a un usuario.</p>
+
+<h3>4.6. Tabla: <code>empleos</code></h3>
+<pre><code>CREATE TABLE IF NOT EXISTS empleos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    empresa_id INT NOT NULL,
+    titulo VARCHAR(200) NOT NULL,
+    descripcion TEXT NOT NULL,
+    ubicacion VARCHAR(150) DEFAULT NULL,
+    tipo_contrato VARCHAR(50) DEFAULT 'Tiempo completo',
+    salario VARCHAR(100) DEFAULT NULL,
+    requisitos TEXT DEFAULT NULL,
+    fecha_publicacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('activo', 'cerrado') DEFAULT 'activo',
+    FOREIGN KEY (empresa_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);</code></pre>
+<p>Contiene las ofertas de empleo publicadas por empresas. El campo <code>estado</code> permite marcar un empleo como activo o cerrado.</p>
+
+<h3>4.7. Tabla: <code>postulaciones</code></h3>
+<pre><code>CREATE TABLE IF NOT EXISTS postulaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    empleo_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    mensaje TEXT DEFAULT NULL,
+    fecha_postulacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('pendiente', 'aceptada', 'rechazada') DEFAULT 'pendiente',
+    UNIQUE KEY unique_postulacion (empleo_id, usuario_id),
+    FOREIGN KEY (empleo_id) REFERENCES empleos(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);</code></pre>
+<p>Registra las postulaciones de usuarios a empleos. La restricción <code>UNIQUE</code> evita postulaciones duplicadas.</p>
+
+<h3>4.8. Tabla: <code>donaciones</code></h3>
+<pre><code>CREATE TABLE IF NOT EXISTS donaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    donante_id INT NOT NULL,
+    monto DECIMAL(10,2) NOT NULL,
+    mensaje TEXT DEFAULT NULL,
+    metodo_pago VARCHAR(50) DEFAULT 'Transferencia',
+    fecha_donacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (donante_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);</code></pre>
+<p>Almacena las donaciones. El campo <code>monto</code> es de tipo <code>DECIMAL(10,2)</code> para precisión monetaria (hasta 10 dígitos con 2 decimales).</p>
+
+<h3>4.9. Tabla: <code>asesorias</code></h3>
+<pre><code>CREATE TABLE IF NOT EXISTS asesorias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    profesional_id INT DEFAULT NULL,
+    solicitante_id INT NOT NULL,
+    tipo ENUM('psicologica', 'juridica') NOT NULL,
+    descripcion TEXT NOT NULL,
+    fecha_solicitud DATETIME DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('pendiente', 'aceptada', 'completada', 'cancelada') DEFAULT 'pendiente',
+    FOREIGN KEY (profesional_id) REFERENCES usuarios(id) ON DELETE SET NULL,
+    FOREIGN KEY (solicitante_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);</code></pre>
+<p>Registra las solicitudes de asesoría. Se puede asignar a un profesional específico. El ciclo de vida de una asesoría es: pendiente → aceptada → completada (o cancelada).</p>
+
+<h3>4.10. Datos de ejemplo</h3>
+<p>El archivo también incluye datos de ejemplo: 8 usuarios ficticios, 6 publicaciones, likes, comentarios, 5 ofertas de empleo, 4 donaciones y 4 asesorías. Todos los usuarios de ejemplo tienen la contraseña <code>"123456"</code> encriptada con bcrypt.</p>
+
+<!-- ============================================================ -->
+<h2 id="api-config" class="page-break">5. API — Configuración (config.php)</h2>
+
+<div class="file-section">
+    <span class="file-path">api/config.php</span>
+    <p>Archivo central de configuración que todos los demás archivos PHP importan. Contiene la conexión a la base de datos y funciones auxiliares reutilizables.</p>
+</div>
+
+<h3>5.1. Headers HTTP (CORS)</h3>
+<pre><code>header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');</code></pre>
+<p>Estos encabezados configuran:</p>
+<ul>
+    <li><strong>Content-Type:</strong> Indica que todas las respuestas serán en formato JSON.</li>
+    <li><strong>CORS (Cross-Origin Resource Sharing):</strong> Permite que el frontend acceda a la API desde cualquier origen (<code>*</code>). Esto es necesario cuando el frontend y la API se sirven desde diferentes orígenes.</li>
+    <li><strong>Preflight:</strong> Las peticiones OPTIONS (preflight) se responden con código 200 inmediatamente.</li>
+</ul>
+
+<h3>5.2. Conexión a la Base de Datos</h3>
+<pre><code>define('DB_HOST', 'localhost');
+define('DB_NAME', 'equired_db');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_CHARSET', 'utf8mb4');
+
+function getConnection() {
+    $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+    $options = [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ];
+    return new PDO($dsn, DB_USER, DB_PASS, $options);
+}</code></pre>
+<p>Usa <strong>PDO (PHP Data Objects)</strong> para una conexión segura a MySQL. Las opciones configuran:</p>
+<ul>
+    <li><code>ERRMODE_EXCEPTION</code>: Los errores de BD lanzan excepciones (fácil de depurar).</li>
+    <li><code>FETCH_ASSOC</code>: Los resultados se devuelven como arrays asociativos (clave → valor).</li>
+    <li><code>EMULATE_PREPARES = false</code>: Usa prepared statements nativos del servidor (mayor seguridad contra inyección SQL).</li>
+</ul>
+
+<h3>5.3. Funciones auxiliares</h3>
+
+<h4><code>sendResponse($data, $code)</code></h4>
+<p>Envía una respuesta JSON exitosa con el formato <code>{"success": true, "data": ...}</code>.</p>
+
+<h4><code>sendError($message, $code)</code></h4>
+<p>Envía una respuesta JSON de error con el formato <code>{"success": false, "error": "..."}</code>.</p>
+
+<h4><code>getBody()</code></h4>
+<p>Lee el cuerpo de la petición HTTP (que viene en formato JSON desde el frontend) y lo convierte a un array PHP.</p>
+
+<h4><code>requireAuth()</code></h4>
+<p>Verifica que el usuario tenga una sesión activa. Si no la tiene, devuelve un error 401. Si la tiene, retorna el <code>user_id</code>.</p>
+
+<h4><code>getCurrentUser()</code></h4>
+<p>Retorna los datos del usuario actual almacenados en la sesión PHP, o <code>null</code> si no hay sesión.</p>
+
+<!-- ============================================================ -->
+<h2 id="api-auth" class="page-break">6. API — Autenticación (auth.php)</h2>
+
+<div class="file-section">
+    <span class="file-path">api/auth.php</span>
+    <p>Maneja el registro de usuarios, inicio de sesión, cierre de sesión y verificación de sesión activa.</p>
+</div>
+
+<h3>6.1. Enrutamiento</h3>
+<p>El archivo recibe un parámetro <code>action</code> por la URL y ejecuta la función correspondiente:</p>
+<pre><code>$action = $_GET['action'] ?? '';
+switch ($action) {
+    case 'register': register(); break;
+    case 'login':    login();    break;
+    case 'logout':   logout();   break;
+    case 'session':  checkSession(); break;
+}</code></pre>
+
+<h3>6.2. Función <code>register()</code></h3>
+<p>Proceso de registro:</p>
+<ol>
+    <li>Verifica que el método HTTP sea POST.</li>
+    <li>Extrae los datos del body JSON: nombre, email, password, tipo_usuario.</li>
+    <li><strong>Validaciones:</strong> campos no vacíos, email válido, contraseña mínimo 6 caracteres, contraseñas coinciden, tipo de usuario válido.</li>
+    <li>Verifica que el email no esté ya registrado en la base de datos.</li>
+    <li>Encripta la contraseña con <code>password_hash($password, PASSWORD_BCRYPT)</code>.</li>
+    <li>Inserta el nuevo usuario en la BD.</li>
+    <li>Inicia sesión automáticamente guardando los datos en <code>$_SESSION</code>.</li>
+    <li>Retorna los datos del usuario creado.</li>
+</ol>
+
+<div class="info-box">
+    <strong>🔐 Seguridad:</strong> La contraseña NUNCA se almacena en texto plano. Se usa <code>bcrypt</code>, un algoritmo de hash unidireccional seguro. Esto significa que aunque alguien acceda a la base de datos, no podrá ver las contraseñas reales.
+</div>
+
+<h3>6.3. Función <code>login()</code></h3>
+<p>Proceso de inicio de sesión:</p>
+<ol>
+    <li>Recibe email y password del body.</li>
+    <li>Busca al usuario por email en la BD.</li>
+    <li>Compara la contraseña con <code>password_verify()</code> (compara contra el hash almacenado).</li>
+    <li>Si es correcto, crea la sesión PHP con los datos del usuario.</li>
+    <li>Devuelve los datos del usuario.</li>
+</ol>
+
+<h3>6.4. Función <code>logout()</code></h3>
+<p>Destruye la sesión PHP con <code>session_destroy()</code>, lo que cierra la sesión del usuario.</p>
+
+<h3>6.5. Función <code>checkSession()</code></h3>
+<p>Verifica si hay una sesión activa. El frontend llama a esta función al cargar cada página para saber si el usuario está logueado.</p>
+
+<!-- ============================================================ -->
+<h2 id="api-publicaciones" class="page-break">7. API — Publicaciones (publicaciones.php)</h2>
+
+<div class="file-section">
+    <span class="file-path">api/publicaciones.php</span>
+    <p>Gestiona el feed social: listar, crear, dar like, comentar y eliminar publicaciones.</p>
+</div>
+
+<h3>7.1. Enrutamiento</h3>
+<p>Usa el método HTTP y el parámetro <code>action</code> para determinar la acción:</p>
+<table>
+    <tr><th>Método</th><th>Action</th><th>Función</th></tr>
+    <tr><td>GET</td><td>—</td><td><code>getPublicaciones()</code> — Listar publicaciones</td></tr>
+    <tr><td>POST</td><td>create</td><td><code>createPublicacion()</code> — Crear nueva</td></tr>
+    <tr><td>POST</td><td>like</td><td><code>toggleLike()</code> — Dar/quitar me gusta</td></tr>
+    <tr><td>POST</td><td>comment</td><td><code>addComment()</code> — Agregar comentario</td></tr>
+    <tr><td>DELETE</td><td>—</td><td><code>deletePublicacion()</code> — Eliminar</td></tr>
+</table>
+
+<h3>7.2. <code>getPublicaciones()</code></h3>
+<p>Obtiene las publicaciones del feed con paginación (10 por página). Para cada publicación retorna:</p>
+<ul>
+    <li>Datos del autor (nombre, avatar, tipo).</li>
+    <li>Conteo total de likes y comentarios (usando subconsultas SQL).</li>
+    <li>Si el usuario actual ya dio "me gusta" (<code>user_liked</code>).</li>
+    <li>Los últimos 5 comentarios de la publicación.</li>
+</ul>
+
+<h3>7.3. <code>toggleLike()</code></h3>
+<p>Funciona como un interruptor: si el usuario ya dio like, lo quita (DELETE). Si no lo ha dado, lo agrega (INSERT). Retorna el estado actual y el total de likes.</p>
+
+<h3>7.4. <code>addComment()</code></h3>
+<p>Inserta un nuevo comentario en la tabla <code>comentarios</code> y devuelve el comentario creado con los datos del autor.</p>
+
+<h3>7.5. <code>deletePublicacion()</code></h3>
+<p>Solo permite eliminar publicaciones propias (la cláusula <code>WHERE usuario_id = ?</code> asegura esto). Si no se encuentra la publicación o no es del usuario, retorna error 404.</p>
+
+<!-- ============================================================ -->
+<h2 id="api-empleos" class="page-break">8. API — Empleos (empleos.php)</h2>
+
+<div class="file-section">
+    <span class="file-path">api/empleos.php</span>
+    <p>Gestiona la bolsa de empleo: listar, buscar, crear empleos y postularse.</p>
+</div>
+
+<h3>8.1. Endpoints</h3>
+<table>
+    <tr><th>Método</th><th>Action</th><th>Función</th></tr>
+    <tr><td>GET</td><td>—</td><td><code>getEmpleos()</code> — Listar empleos activos</td></tr>
+    <tr><td>GET</td><td>detail</td><td><code>getEmpleoDetail()</code> — Detalle de un empleo</td></tr>
+    <tr><td>GET</td><td>my_posts</td><td><code>getMyEmpleos()</code> — Empleos publicados por la empresa</td></tr>
+    <tr><td>GET</td><td>applications</td><td><code>getPostulaciones()</code> — Mis postulaciones</td></tr>
+    <tr><td>POST</td><td>create</td><td><code>createEmpleo()</code> — Publicar empleo (solo empresas)</td></tr>
+    <tr><td>POST</td><td>apply</td><td><code>postularse()</code> — Postularse a un empleo</td></tr>
+</table>
+
+<h3>8.2. <code>getEmpleos()</code></h3>
+<p>Lista todos los empleos activos con soporte para <strong>búsqueda</strong> (por título, descripción o ubicación) y <strong>filtro</strong> por tipo de contrato. La búsqueda usa <code>LIKE</code> con comodines (<code>%texto%</code>).</p>
+
+<h3>8.3. <code>createEmpleo()</code></h3>
+<p>Solo los usuarios con <code>tipo_usuario = 'empresa'</code> pueden crear empleos. Verifica el rol antes de insertar.</p>
+
+<h3>8.4. <code>postularse()</code></h3>
+<p>Validaciones antes de crear la postulación:</p>
+<ol>
+    <li>Verificar que el empleo existe y está activo.</li>
+    <li>Verificar que el usuario no se postule a su propio empleo.</li>
+    <li>Verificar que no se haya postulado previamente (evitar duplicados).</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2 id="api-donaciones" class="page-break">9. API — Donaciones (donaciones.php)</h2>
+
+<div class="file-section">
+    <span class="file-path">api/donaciones.php</span>
+    <p>Registra donaciones y muestra estadísticas de impacto.</p>
+</div>
+
+<h3>9.1. Endpoints</h3>
+<table>
+    <tr><th>Método</th><th>Action</th><th>Función</th></tr>
+    <tr><td>GET</td><td>—</td><td><code>getDonaciones()</code> — Historial de donaciones del usuario</td></tr>
+    <tr><td>GET</td><td>stats</td><td><code>getStats()</code> — Estadísticas públicas</td></tr>
+    <tr><td>POST</td><td>create</td><td><code>createDonacion()</code> — Registrar donación</td></tr>
+</table>
+
+<h3>9.2. <code>getStats()</code></h3>
+<p>Retorna estadísticas públicas:</p>
+<ul>
+    <li><code>total_monto</code>: Suma total de todas las donaciones (<code>SUM(monto)</code>).</li>
+    <li><code>total_donaciones</code>: Cantidad total de donaciones (<code>COUNT(*)</code>).</li>
+    <li><code>total_donantes</code>: Número de donantes únicos (<code>COUNT(DISTINCT donante_id)</code>).</li>
+    <li><code>recientes</code>: Las últimas 5 donaciones con nombre del donante.</li>
+</ul>
+
+<h3>9.3. <code>createDonacion()</code></h3>
+<p>Registra una nueva donación validando que el monto sea mayor a 0 y menor a $100,000. Requiere autenticación.</p>
+
+<!-- ============================================================ -->
+<h2 id="api-asesorias" class="page-break">10. API — Asesorías (asesorias.php)</h2>
+
+<div class="file-section">
+    <span class="file-path">api/asesorias.php</span>
+    <p>Gestiona las solicitudes de asesoría psicológica y jurídica.</p>
+</div>
+
+<h3>10.1. Endpoints</h3>
+<table>
+    <tr><th>Método</th><th>Action</th><th>Función</th></tr>
+    <tr><td>GET</td><td>profesionales</td><td><code>getProfesionales()</code> — Listar profesionales</td></tr>
+    <tr><td>GET</td><td>—</td><td><code>getAsesorias()</code> — Mis asesorías</td></tr>
+    <tr><td>POST</td><td>request</td><td><code>requestAsesoria()</code> — Solicitar asesoría</td></tr>
+    <tr><td>POST</td><td>update</td><td><code>updateAsesoria()</code> — Actualizar estado</td></tr>
+</table>
+
+<h3>10.2. <code>getProfesionales()</code></h3>
+<p>Lista los usuarios con <code>tipo_usuario = 'profesional'</code>. Filtra por tipo de asesoría usando búsqueda en la biografía (<code>bio LIKE '%psicólog%'</code> para psicólogos, <code>bio LIKE '%abogad%'</code> para abogados). También cuenta las asesorías completadas por cada profesional.</p>
+
+<h3>10.3. <code>getAsesorias()</code></h3>
+<p>Retorna diferentes datos según el rol:</p>
+<ul>
+    <li><strong>Profesional:</strong> Ve las solicitudes que le han enviado (con datos del solicitante).</li>
+    <li><strong>Otros usuarios:</strong> Ve las solicitudes que han enviado (con datos del profesional asignado).</li>
+</ul>
+
+<h3>10.4. <code>updateAsesoria()</code></h3>
+<p>Solo los profesionales pueden cambiar el estado de una asesoría. Los estados posibles son: <code>aceptada</code>, <code>completada</code>, <code>cancelada</code>.</p>
+
+<!-- ============================================================ -->
+<h2 id="html-pages" class="page-break">11. Páginas HTML (Frontend)</h2>
+
+<p>Todas las páginas HTML comparten la misma estructura básica:</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;                    ← Codificación de caracteres
+    &lt;meta name="viewport" content="..."&gt;       ← Diseño responsivo
+    &lt;meta name="description" content="..."&gt;    ← SEO (buscadores)
+    &lt;title&gt;Título — EquiRed&lt;/title&gt;           ← Título de la pestaña
+    &lt;link rel="stylesheet" href="css/styles.css"&gt;  ← Estilos
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;nav class="navbar"&gt;...&lt;/nav&gt;             ← Barra de navegación
+    &lt;main&gt;...&lt;/main&gt;                          ← Contenido principal
+    &lt;footer&gt;...&lt;/footer&gt;                      ← Pie de página (solo index)
+    &lt;script src="js/app.js"&gt;&lt;/script&gt;         ← JS global
+    &lt;script src="js/[modulo].js"&gt;&lt;/script&gt;    ← JS específico
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<h3>11.1. index.html — Landing Page</h3>
+<p>Página de bienvenida con:</p>
+<ul>
+    <li><strong>Hero Section:</strong> Título, descripción y botones de registro/ingreso.</li>
+    <li><strong>Features:</strong> Cuatro tarjetas mostrando las funcionalidades principales.</li>
+    <li><strong>Stats:</strong> Contadores animados con cifras de impacto.</li>
+    <li><strong>ODS 10:</strong> Sección explicativa sobre el objetivo de desarrollo sostenible.</li>
+    <li><strong>CTA (Call to Action):</strong> Invitación final a registrarse.</li>
+    <li><strong>Footer:</strong> Pie de página con enlaces y créditos.</li>
+</ul>
+
+<h3>11.2. login.html — Inicio de Sesión</h3>
+<p>Formulario con campos de email y contraseña. Incluye enlace a registro y a "¿Olvidaste tu contraseña?".</p>
+
+<h3>11.3. registro.html — Registro</h3>
+<p>Formulario con: nombre, email, contraseña, confirmación de contraseña y selección del tipo de usuario mediante botones radio.</p>
+
+<h3>11.4. principal.html — Feed Social</h3>
+<p>Contiene: banner motivacional, caja para crear publicaciones (visible solo si está logueado), contenedor del feed y botón "cargar más".</p>
+
+<h3>11.5. empleos.html — Bolsa de Empleo</h3>
+<p>Sistema de pestañas (tabs): buscar empleos, mis postulaciones y publicar empleo (solo empresas). Incluye un modal para el proceso de postulación.</p>
+
+<h3>11.6. donaciones.html — Donaciones</h3>
+<p>Formulario de donación con montos predefinidos, campo personalizado, método de pago y mensaje. Sidebar con estadísticas y donaciones recientes.</p>
+
+<h3>11.7. asesorias.html — Asesorías</h3>
+<p>Selector de tipo de asesoría (psicológica/jurídica), grid de profesionales disponibles, historial de asesorías y modal de solicitud.</p>
+
+<!-- ============================================================ -->
+<h2 id="js-app" class="page-break">12. JavaScript — App Global (app.js)</h2>
+
+<div class="file-section">
+    <span class="file-path">js/app.js</span>
+    <p>Archivo JavaScript principal que se carga en TODAS las páginas. Contiene la lógica compartida.</p>
+</div>
+
+<h3>12.1. Constantes y Estado Global</h3>
+<pre><code>const API_BASE = 'api';     // Ruta base para todas las peticiones al backend
+let currentUser = null;     // Almacena los datos del usuario logueado (o null)</code></pre>
+
+<h3>12.2. Inicialización</h3>
+<pre><code>document.addEventListener('DOMContentLoaded', () => {
+    checkSession();    // Verifica si hay sesión activa
+    initNavbar();      // Configura la barra de navegación
+    initAnimations();  // Activa las animaciones de entrada
+});</code></pre>
+<p>El evento <code>DOMContentLoaded</code> se ejecuta cuando el HTML ha sido completamente cargado, antes de que imágenes y recursos externos terminen.</p>
+
+<h3>12.3. <code>checkSession()</code></h3>
+<p>Hace una petición GET a <code>api/auth.php?action=session</code> para verificar si el usuario tiene una sesión activa. Si la sesión existe, almacena los datos en <code>currentUser</code> y actualiza la barra de navegación.</p>
+
+<h3>12.4. <code>initNavbar()</code></h3>
+<p>Tres funcionalidades:</p>
+<ul>
+    <li><strong>Efecto scroll:</strong> Agrega la clase <code>scrolled</code> al navbar cuando el usuario baja más de 10px.</li>
+    <li><strong>Menú móvil:</strong> El botón hamburguesa (<code>☰</code>) alterna la visibilidad del menú en dispositivos móviles.</li>
+    <li><strong>Link activo:</strong> Detecta la página actual y resalta el enlace correspondiente en la navegación.</li>
+</ul>
+
+<h3>12.5. <code>updateNavbarAuth(isLoggedIn)</code></h3>
+<p>Modifica dinámicamente los botones del navbar:</p>
+<ul>
+    <li><strong>Logueado:</strong> Muestra avatar con iniciales, nombre del usuario y botón "Salir".</li>
+    <li><strong>No logueado:</strong> Muestra botones "Ingresar" y "Registrarse".</li>
+</ul>
+
+<h3>12.6. Funciones utilitarias</h3>
+
+<h4><code>getInitials(name)</code></h4>
+<p>Extrae las iniciales de un nombre. Ejemplo: <code>"María González"</code> → <code>"MG"</code>.</p>
+
+<h4><code>timeAgo(dateStr)</code></h4>
+<p>Convierte una fecha en un texto relativo: "Hace un momento", "Hace 5 min", "Hace 3 horas", "Hace 2 días", etc.</p>
+
+<h4><code>formatCurrency(amount)</code></h4>
+<p>Formatea un número como moneda usando <code>Intl.NumberFormat</code>. Ejemplo: <code>1500</code> → <code>"US$1,500.00"</code>.</p>
+
+<h3>12.7. <code>showToast(message, type)</code></h3>
+<p>Sistema de notificaciones temporales (toasts) que aparecen en la esquina de la pantalla. Tipos: <code>success</code> (✅), <code>error</code> (❌), <code>warning</code> (⚠️), <code>info</code> (ℹ️). Se auto-eliminan después de 4 segundos.</p>
+
+<h3>12.8. <code>apiFetch(url, options)</code></h3>
+<p>Wrapper alrededor de <code>fetch()</code> que:</p>
+<ul>
+    <li>Agrega automáticamente el header <code>Content-Type: application/json</code>.</li>
+    <li>Parsea la respuesta JSON.</li>
+    <li>Captura errores de red y devuelve un formato consistente.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="js-landing" class="page-break">13. JavaScript — Landing Page (landing.js)</h2>
+
+<div class="file-section">
+    <span class="file-path">js/landing.js</span>
+    <p>Solo se carga en <code>index.html</code>. Contiene la animación de los contadores estadísticos.</p>
+</div>
+
+<h3>13.1. <code>initCounters()</code></h3>
+<p>Usa el <strong>Intersection Observer API</strong> para detectar cuándo los contadores aparecen en la pantalla. Cuando el usuario hace scroll hasta la sección de estadísticas, los números se animan de 0 al valor objetivo.</p>
+
+<h3>13.2. <code>animateCounter(element, target)</code></h3>
+<p>Anima un número de 0 al valor objetivo en 2 segundos usando <code>requestAnimationFrame</code>. Usa una función de <strong>easing</strong> (ease-out: <code>1 - (1 - t)³</code>) para que la animación sea fluida y desacelere al final. Al terminar, agrega un "+" al número.</p>
+
+<!-- ============================================================ -->
+<h2 id="js-auth" class="page-break">14. JavaScript — Autenticación (auth.js)</h2>
+
+<div class="file-section">
+    <span class="file-path">js/auth.js</span>
+    <p>Se carga en <code>login.html</code> y <code>registro.html</code>. Maneja los formularios de autenticación.</p>
+</div>
+
+<h3>14.1. <code>handleLogin(e)</code></h3>
+<p>Proceso cuando el usuario envía el formulario de login:</p>
+<ol>
+    <li><code>e.preventDefault()</code> — Evita que la página se recargue (comportamiento por defecto del form).</li>
+    <li>Extrae email y password de los inputs.</li>
+    <li>Validación básica: ambos campos deben tener valor.</li>
+    <li>Deshabilita el botón y cambia su texto a "Ingresando...".</li>
+    <li>Envía petición POST a <code>api/auth.php?action=login</code>.</li>
+    <li>Si es exitoso: muestra toast de bienvenida y redirige a <code>principal.html</code> después de 800ms.</li>
+    <li>Si falla: muestra el error y re-habilita el botón.</li>
+</ol>
+
+<h3>14.2. <code>handleRegister(e)</code></h3>
+<p>Similar al login pero con más validaciones:</p>
+<ul>
+    <li>Campos no vacíos.</li>
+    <li>Email contiene "@".</li>
+    <li>Contraseña mínimo 6 caracteres.</li>
+    <li>Contraseñas coinciden.</li>
+</ul>
+<p>Envía nombre, email, password, confirm_password y tipo_usuario al servidor.</p>
+
+<!-- ============================================================ -->
+<h2 id="js-principal" class="page-break">15. JavaScript — Feed Social (principal.js)</h2>
+
+<div class="file-section">
+    <span class="file-path">js/principal.js</span>
+    <p>Se carga en <code>principal.html</code>. Gestiona todo el feed social: publicaciones, likes y comentarios.</p>
+</div>
+
+<h3>15.1. Variables de estado</h3>
+<pre><code>let currentPage = 1;    // Página actual de la paginación
+let hasMore = true;     // Si hay más publicaciones por cargar
+let isLoading = false;  // Evita peticiones duplicadas</code></pre>
+
+<h3>15.2. <code>initFeed()</code></h3>
+<p>Se ejecuta 300ms después de cargar la página (espera a que <code>checkSession</code> termine). Según si el usuario está logueado:</p>
+<ul>
+    <li><strong>Logueado:</strong> Muestra la caja de nueva publicación con las iniciales del usuario.</li>
+    <li><strong>No logueado:</strong> Muestra un prompt invitando a iniciar sesión.</li>
+</ul>
+
+<h3>15.3. <code>loadPosts()</code></h3>
+<p>Carga las publicaciones desde la API con paginación. Cada vez que se llama, obtiene la siguiente página. Controla el botón "Cargar más" según si hay más resultados.</p>
+
+<h3>15.4. <code>renderPost(post)</code></h3>
+<p>Genera el HTML de una tarjeta de publicación. Incluye:</p>
+<ul>
+    <li><strong>Header:</strong> Avatar con iniciales, nombre del autor, tiempo relativo y badge de tipo de usuario.</li>
+    <li><strong>Contenido:</strong> Texto de la publicación e imagen (si existe).</li>
+    <li><strong>Stats:</strong> Conteo de likes y comentarios.</li>
+    <li><strong>Acciones:</strong> Botones de me gusta, comentar y compartir.</li>
+    <li><strong>Comentarios:</strong> Lista de comentarios existentes.</li>
+    <li><strong>Formulario de comentario:</strong> Input para agregar un nuevo comentario (oculto por defecto).</li>
+</ul>
+
+<h3>15.5. <code>createPost()</code></h3>
+<p>Envía la nueva publicación a la API e inserta el resultado al inicio del feed sin recargar la página.</p>
+
+<h3>15.6. <code>toggleLike(postId)</code></h3>
+<p>Alterna el "me gusta" en una publicación. Actualiza el ícono (🤍 ↔ 💜), la clase CSS y el contador de likes.</p>
+
+<h3>15.7. <code>toggleComments(postId)</code> y <code>addComment(postId)</code></h3>
+<p><code>toggleComments</code> muestra/oculta el formulario de comentario. <code>addComment</code> envía el comentario a la API y lo inserta en la lista de comentarios sin recargar.</p>
+
+<!-- ============================================================ -->
+<h2 id="js-empleos" class="page-break">16. JavaScript — Empleos (empleos.js)</h2>
+
+<div class="file-section">
+    <span class="file-path">js/empleos.js</span>
+    <p>Se carga en <code>empleos.html</code>. Gestiona la búsqueda de empleos, postulaciones y publicación de vacantes.</p>
+</div>
+
+<h3>16.1. Sistema de pestañas</h3>
+<p><code>switchTab(tab)</code> alterna entre tres vistas: búsqueda de empleos, mis postulaciones y publicar empleo. La pestaña de "publicar" solo es visible para usuarios tipo empresa.</p>
+
+<h3>16.2. Búsqueda con debounce</h3>
+<pre><code>function debounceSearch() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(searchJobs, 300);
+}</code></pre>
+<p>La técnica de <strong>debounce</strong> evita hacer una petición por cada tecla que escribe el usuario. Espera 300ms después de la última tecla antes de ejecutar la búsqueda.</p>
+
+<h3>16.3. <code>searchJobs()</code></h3>
+<p>Envía la búsqueda y filtros a la API y renderiza las tarjetas de empleo. Si no hay resultados, muestra un estado vacío.</p>
+
+<h3>16.4. <code>renderJobCard(job)</code></h3>
+<p>Genera el HTML de cada tarjeta de empleo con: icono de empresa, tipo de contrato, título, nombre de empresa, descripción, ubicación, fecha, salario y botón de postulación.</p>
+
+<h3>16.5. Modal de postulación</h3>
+<p><code>openApplyModal()</code> abre un modal con los detalles del empleo y un campo para escribir un mensaje de presentación. <code>submitApplication()</code> envía la postulación a la API.</p>
+
+<h3>16.6. <code>loadApplications()</code></h3>
+<p>Carga el historial de postulaciones del usuario, mostrando el título del empleo, la empresa y el estado con un badge de color (⏳ Pendiente, ✅ Aceptada, ❌ Rechazada).</p>
+
+<h3>16.7. <code>publishJob(e)</code></h3>
+<p>Solo para empresas. Envía los datos del formulario de creación de empleo a la API. Después de publicar exitosamente, cambia a la pestaña de búsqueda y recarga los resultados.</p>
+
+<!-- ============================================================ -->
+<h2 id="js-donaciones" class="page-break">17. JavaScript — Donaciones (donaciones.js)</h2>
+
+<div class="file-section">
+    <span class="file-path">js/donaciones.js</span>
+    <p>Se carga en <code>donaciones.html</code>. Gestiona el formulario de donación y las estadísticas.</p>
+</div>
+
+<h3>17.1. <code>selectAmount(amount)</code></h3>
+<p>Cuando el usuario hace clic en un botón de monto predefinido ($10, $25, $50, etc.), establece ese valor en el input y resalta el botón seleccionado.</p>
+
+<h3>17.2. <code>loadDonationStats()</code></h3>
+<p>Carga y muestra las estadísticas públicas: total recaudado, número de donaciones, donantes únicos y las 5 donaciones más recientes con avatar, nombre del donante, mensaje y monto.</p>
+
+<h3>17.3. <code>handleDonation(e)</code></h3>
+<p>Proceso de donación:</p>
+<ol>
+    <li>Verifica que el usuario esté logueado.</li>
+    <li>Extrae monto, método de pago y mensaje del formulario.</li>
+    <li>Valida que el monto sea mayor a 0.</li>
+    <li>Envía la donación a la API.</li>
+    <li>Si es exitoso: limpia el formulario y recarga las estadísticas y el historial.</li>
+</ol>
+
+<h3>17.4. <code>loadMyDonations()</code></h3>
+<p>Carga el historial personal de donaciones del usuario, mostrando monto, método de pago, mensaje y fecha.</p>
+
+<!-- ============================================================ -->
+<h2 id="js-asesorias" class="page-break">18. JavaScript — Asesorías (asesorias.js)</h2>
+
+<div class="file-section">
+    <span class="file-path">js/asesorias.js</span>
+    <p>Se carga en <code>asesorias.html</code>. Gestiona la solicitud de asesorías y la interacción con profesionales.</p>
+</div>
+
+<h3>18.1. <code>selectType(tipo)</code></h3>
+<p>Cuando el usuario selecciona "Asesoría Psicológica" o "Asesoría Jurídica", resalta la tarjeta seleccionada, actualiza el título de la sección y carga los profesionales disponibles del tipo correspondiente.</p>
+
+<h3>18.2. <code>loadProfesionales(tipo)</code></h3>
+<p>Obtiene la lista de profesionales de la API y renderiza una tarjeta por cada uno con: avatar, nombre, biografía, cantidad de asesorías completadas y botón para solicitar asesoría.</p>
+
+<h3>18.3. Modal de solicitud</h3>
+<p><code>openAsesoriaModal()</code> abre un modal donde el usuario describe su situación. <code>submitAsesoria()</code> envía la solicitud a la API con el ID del profesional, tipo de asesoría y descripción.</p>
+
+<h3>18.4. <code>loadMyAsesorias()</code></h3>
+<p>Carga el historial de asesorías. El contenido varía según el rol:</p>
+<ul>
+    <li><strong>Profesional:</strong> Ve las solicitudes recibidas con botones para aceptar/rechazar/completar.</li>
+    <li><strong>Otros usuarios:</strong> Ve sus solicitudes enviadas con el nombre del profesional asignado.</li>
+</ul>
+<p>Cada asesoría muestra un badge de estado con colores semánticos:</p>
+<table>
+    <tr><th>Estado</th><th>Ícono</th><th>Color</th></tr>
+    <tr><td>Pendiente</td><td>⏳</td><td>Amarillo (warning)</td></tr>
+    <tr><td>Aceptada</td><td>✅</td><td>Azul (primary)</td></tr>
+    <tr><td>Completada</td><td>🎉</td><td>Verde (success)</td></tr>
+    <tr><td>Cancelada</td><td>❌</td><td>Rojo (error)</td></tr>
+</table>
+
+<h3>18.5. <code>updateAsesoriaStatus(id, estado)</code></h3>
+<p>Solo para profesionales. Envía una petición para cambiar el estado de una asesoría (aceptar, completar o cancelar) y recarga la lista.</p>
+
+<!-- ============================================================ -->
+<h2 id="css" class="page-break">19. Estilos CSS (styles.css)</h2>
+
+<div class="file-section">
+    <span class="file-path">css/styles.css</span>
+    <p>Archivo único de estilos que controla toda la apariencia visual de la aplicación. Con más de 50,000 bytes, contiene un diseño moderno y responsivo.</p>
+</div>
+
+<h3>19.1. Variables CSS (Custom Properties)</h3>
+<p>Define un tema de colores, tamaños de fuente, espaciado y otros valores reutilizables en la raíz del documento (<code>:root</code>):</p>
+<ul>
+    <li><strong>Colores primarios:</strong> Tonos púrpura/índigo para la marca.</li>
+    <li><strong>Colores de estado:</strong> Verde (éxito), rojo (error), amarillo (advertencia).</li>
+    <li><strong>Escala tipográfica:</strong> Desde <code>font-xs</code> hasta <code>font-5xl</code>.</li>
+    <li><strong>Espaciado:</strong> Escala predefinida de 4px a 96px.</li>
+</ul>
+
+<h3>19.2. Componentes principales estilizados</h3>
+<ul>
+    <li><strong>Navbar:</strong> Fija en la parte superior, efecto de sombra al hacer scroll, menú responsivo.</li>
+    <li><strong>Hero:</strong> Sección de bienvenida con gradiente de fondo.</li>
+    <li><strong>Feature Cards:</strong> Tarjetas de características con efecto hover.</li>
+    <li><strong>Post Cards:</strong> Tarjetas del feed social con avatar, contenido y acciones.</li>
+    <li><strong>Job Cards:</strong> Tarjetas de empleo con diseño grid.</li>
+    <li><strong>Modals:</strong> Ventanas modales con overlay oscuro.</li>
+    <li><strong>Toasts:</strong> Notificaciones temporales con animación de entrada/salida.</li>
+    <li><strong>Formularios:</strong> Inputs, selects y botones con diseño consistente.</li>
+    <li><strong>Badges:</strong> Etiquetas de estado con colores semánticos.</li>
+    <li><strong>Animaciones:</strong> Fade-in, slide-up y efectos de hover.</li>
+</ul>
+
+<h3>19.3. Diseño Responsivo</h3>
+<p>Usa <strong>media queries</strong> para adaptar la interfaz a diferentes tamaños de pantalla: escritorio, tablet y móvil. Los layouts se basan en <strong>CSS Flexbox</strong> y <strong>CSS Grid</strong>.</p>
+
+<!-- ============================================================ -->
+<h2 id="flujo" class="page-break">20. Flujo Completo de la Aplicación</h2>
+
+<h3>20.1. Flujo de registro y login</h3>
+<div class="diagram">
+<pre style="text-align: left; display: inline-block; background: #1e1e2e; padding: 20px; border-radius: 10px;">
+Usuario visita index.html
+    │
+    ├─→ Clic "Registrarse"
+    │       │
+    │       ▼
+    │   registro.html → Llena formulario → JS valida datos
+    │       │
+    │       ▼
+    │   auth.js envía POST a api/auth.php?action=register
+    │       │
+    │       ▼
+    │   PHP valida → Encripta contraseña → INSERT en BD → Crea sesión
+    │       │
+    │       ▼
+    │   Redirige a principal.html ✓
+    │
+    └─→ Clic "Ingresar"
+            │
+            ▼
+        login.html → Email + Password → POST a api/auth.php?action=login
+            │
+            ▼
+        PHP busca usuario → Verifica hash → Crea sesión → Redirige ✓
+</pre>
+</div>
+
+<h3>20.2. Flujo de una publicación</h3>
+<div class="diagram">
+<pre style="text-align: left; display: inline-block; background: #1e1e2e; padding: 20px; border-radius: 10px;">
+Usuario logueado en principal.html
+    │
+    ├─→ Escribe texto en la caja de publicación
+    │       │
+    │       ▼
+    │   createPost() → POST a api/publicaciones.php?action=create
+    │       │
+    │       ▼
+    │   PHP inserta en BD → Retorna publicación creada
+    │       │
+    │       ▼
+    │   JS inserta HTML al inicio del feed (sin recargar) ✓
+    │
+    ├─→ Da "Me gusta" a una publicación
+    │       │
+    │       ▼
+    │   toggleLike() → POST a api/publicaciones.php?action=like
+    │       │
+    │       ▼
+    │   PHP INSERT o DELETE like → Retorna estado y total
+    │       │
+    │       ▼
+    │   JS actualiza ícono y contador ✓
+    │
+    └─→ Comenta una publicación
+            │
+            ▼
+        addComment() → POST a api/publicaciones.php?action=comment
+            │
+            ▼
+        PHP inserta comentario → Retorna comentario con datos del autor
+            │
+            ▼
+        JS inserta el comentario en el DOM ✓
+</pre>
+</div>
+
+<h3>20.3. Flujo de postulación a empleo</h3>
+<div class="diagram">
+<pre style="text-align: left; display: inline-block; background: #1e1e2e; padding: 20px; border-radius: 10px;">
+Usuario en empleos.html
+    │
+    ├─→ Busca empleos (con debounce de 300ms)
+    │       │
+    │       ▼
+    │   searchJobs() → GET a api/empleos.php?search=...&tipo=...
+    │       │
+    │       ▼
+    │   PHP filtra empleos activos → Retorna lista
+    │       │
+    │       ▼
+    │   JS renderiza tarjetas de empleo ✓
+    │
+    └─→ Clic "Postularse" en un empleo
+            │
+            ▼
+        openApplyModal() → Muestra modal con detalles
+            │
+            ▼
+        Usuario escribe mensaje → submitApplication()
+            │
+            ▼
+        POST a api/empleos.php?action=apply
+            │
+            ▼
+        PHP valida (empleo existe, no es propio, no duplicado) → INSERT
+            │
+            ▼
+        Toast de éxito ✓
+</pre>
+</div>
+
+<h3>20.4. Tecnologías utilizadas — Resumen</h3>
+<table>
+    <tr><th>Capa</th><th>Tecnología</th><th>Propósito</th></tr>
+    <tr><td>Frontend</td><td>HTML5</td><td>Estructura semántica de las páginas</td></tr>
+    <tr><td>Frontend</td><td>CSS3</td><td>Diseño visual, animaciones, responsividad</td></tr>
+    <tr><td>Frontend</td><td>JavaScript (ES6+)</td><td>Interactividad, peticiones AJAX, DOM</td></tr>
+    <tr><td>Backend</td><td>PHP 7+</td><td>Lógica del servidor, API REST</td></tr>
+    <tr><td>Backend</td><td>PDO</td><td>Conexión segura a la base de datos</td></tr>
+    <tr><td>Backend</td><td>Sesiones PHP</td><td>Autenticación y estado del usuario</td></tr>
+    <tr><td>Base de datos</td><td>MySQL / MariaDB</td><td>Almacenamiento persistente de datos</td></tr>
+    <tr><td>Comunicación</td><td>JSON</td><td>Formato de intercambio de datos</td></tr>
+    <tr><td>Comunicación</td><td>Fetch API</td><td>Peticiones HTTP asíncronas</td></tr>
+    <tr><td>Seguridad</td><td>bcrypt</td><td>Encriptación de contraseñas</td></tr>
+    <tr><td>Seguridad</td><td>Prepared Statements</td><td>Protección contra inyección SQL</td></tr>
+</table>
+
+<div class="note" style="margin-top: 40px;">
+    <strong>📌 Nota:</strong> Para generar un PDF de este documento, abre este archivo HTML en tu navegador (Chrome/Edge) y presiona <strong>Ctrl + P</strong> (o Cmd + P en Mac). Selecciona <strong>"Guardar como PDF"</strong> como destino para generar automáticamente el PDF.
+</div>
+
+</div>
+</body>
+</html>

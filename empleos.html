@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Encuentra oportunidades laborales inclusivas en EquiRed. Empresas comprometidas con la diversidad te esperan.">
+    <title>Empleos Inclusivos — EquiRed</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar__container">
+            <a href="index.html" class="navbar__brand" id="brand-link">
+                <img src="img/logo.png" alt="EquiRed" class="navbar__brand-logo">
+                EquiRed
+            </a>
+            <div class="navbar__links" id="nav-links">
+                <a href="principal.html" class="navbar__link" id="nav-inicio">Inicio</a>
+                <a href="empleos.html" class="navbar__link" id="nav-empleos">Empleos</a>
+                <a href="donaciones.html" class="navbar__link" id="nav-donar">Donar</a>
+                <a href="asesorias.html" class="navbar__link" id="nav-asesorias">Asesorías</a>
+            </div>
+            <div class="navbar__auth" id="navbar-auth"></div>
+            <button class="navbar__mobile-toggle" id="mobile-toggle" aria-label="Menú">☰</button>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="page-content" id="empleos-page">
+        <div class="page-header fade-in">
+            <h1>💼 Empleos Inclusivos</h1>
+            <p>Encuentra oportunidades laborales en empresas comprometidas con la diversidad y la igualdad.</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs" id="empleos-tabs">
+            <button class="tab active" data-tab="search" id="tab-search" onclick="switchTab('search')">🔍 Buscar empleos</button>
+            <button class="tab" data-tab="my-apps" id="tab-my-apps" onclick="switchTab('my-apps')">📋 Mis postulaciones</button>
+            <button class="tab" data-tab="publish" id="tab-publish" onclick="switchTab('publish')" style="display: none;">➕ Publicar empleo</button>
+        </div>
+
+        <!-- Search Tab -->
+        <div id="tab-content-search">
+            <div class="search-bar fade-in">
+                <div class="search-bar__input">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Buscar por título, descripción o ubicación..." id="search-input" oninput="debounceSearch()">
+                </div>
+                <select id="filter-tipo" onchange="searchJobs()">
+                    <option value="">Todos los tipos</option>
+                    <option value="Tiempo completo">Tiempo completo</option>
+                    <option value="Medio tiempo">Medio tiempo</option>
+                    <option value="Freelance">Freelance</option>
+                    <option value="Prácticas">Prácticas</option>
+                </select>
+            </div>
+
+            <div class="jobs-grid" id="jobs-container">
+                <div class="loading-spinner" id="jobs-loading"></div>
+            </div>
+
+            <div class="empty-state" id="jobs-empty" style="display: none;">
+                <div class="empty-state__icon">🔍</div>
+                <h3 class="empty-state__title">No se encontraron empleos</h3>
+                <p class="empty-state__desc">Intenta con otros términos de búsqueda o filtros.</p>
+            </div>
+        </div>
+
+        <!-- My Applications Tab -->
+        <div id="tab-content-my-apps" style="display: none;">
+            <div class="history-list" id="applications-container">
+                <div class="loading-spinner"></div>
+            </div>
+            <div class="empty-state" id="apps-empty" style="display: none;">
+                <div class="empty-state__icon">📋</div>
+                <h3 class="empty-state__title">Sin postulaciones aún</h3>
+                <p class="empty-state__desc">Explora los empleos disponibles y postúlate al que más te interese.</p>
+            </div>
+        </div>
+
+        <!-- Publish Job Tab (only for companies) -->
+        <div id="tab-content-publish" style="display: none;">
+            <div class="card" style="max-width: 680px; margin: 0 auto;">
+                <h2 style="font-size: var(--font-xl); font-weight: 700; margin-bottom: var(--space-6);">Publicar nuevo empleo</h2>
+                <form id="publish-job-form" novalidate>
+                    <div class="form-group">
+                        <label class="form-label" for="job-titulo">Título del puesto *</label>
+                        <input type="text" class="form-input" id="job-titulo" placeholder="Ej: Desarrollador/a Web Junior" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="job-descripcion">Descripción *</label>
+                        <textarea class="form-input" id="job-descripcion" rows="4" placeholder="Describe el puesto, las responsabilidades y el ambiente laboral..." required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="job-ubicacion">Ubicación</label>
+                            <input type="text" class="form-input" id="job-ubicacion" placeholder="Ej: Remoto / Ciudad de México">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="job-contrato">Tipo de contrato</label>
+                            <select class="form-input" id="job-contrato">
+                                <option value="Tiempo completo">Tiempo completo</option>
+                                <option value="Medio tiempo">Medio tiempo</option>
+                                <option value="Freelance">Freelance</option>
+                                <option value="Prácticas">Prácticas</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="job-salario">Rango salarial</label>
+                            <input type="text" class="form-input" id="job-salario" placeholder="Ej: $12,000 - $18,000 MXN">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="job-requisitos">Requisitos</label>
+                            <input type="text" class="form-input" id="job-requisitos" placeholder="Ej: HTML, CSS, JavaScript básico">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full btn--lg" id="btn-publish-job">
+                        Publicar empleo
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL DE POSTULACIÓN -->
+    <div class="modal-overlay" id="apply-modal">
+        <div class="modal">
+            <div class="modal__header">
+                <h3 class="modal__title" id="modal-job-title">Postularse</h3>
+                <button class="modal__close" onclick="closeModal()" id="btn-close-modal">×</button>
+            </div>
+            <div id="modal-job-details"></div>
+            <form id="apply-form" onsubmit="submitApplication(event)" style="margin-top: var(--space-5);">
+                <input type="hidden" id="apply-job-id">
+                <div class="form-group">
+                    <label class="form-label" for="apply-message">Mensaje de presentación</label>
+                    <textarea class="form-input" id="apply-message" rows="4" placeholder="Cuéntale a la empresa por qué eres el/la candidato/a ideal..."></textarea>
+                </div>
+                <button type="submit" class="btn btn--primary btn--full" id="btn-submit-application">
+                    Enviar postulación
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/empleos.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Solicita asesoría psicológica o jurídica gratuita en EquiRed. Profesionales comprometidos con la inclusión te pueden ayudar.">
+    <title>Asesorías — EquiRed</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar__container">
+            <a href="index.html" class="navbar__brand" id="brand-link">
+                <img src="img/logo.png" alt="EquiRed" class="navbar__brand-logo">
+                EquiRed
+            </a>
+            <div class="navbar__links" id="nav-links">
+                <a href="principal.html" class="navbar__link" id="nav-inicio">Inicio</a>
+                <a href="empleos.html" class="navbar__link" id="nav-empleos">Empleos</a>
+                <a href="donaciones.html" class="navbar__link" id="nav-donar">Donar</a>
+                <a href="asesorias.html" class="navbar__link" id="nav-asesorias">Asesorías</a>
+            </div>
+            <div class="navbar__auth" id="navbar-auth"></div>
+            <button class="navbar__mobile-toggle" id="mobile-toggle" aria-label="Menú">☰</button>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="page-content" id="asesorias-page">
+        <div class="page-header fade-in">
+            <h1>🎓 Asesorías Profesionales</h1>
+            <p>Recibe orientación psicológica y jurídica de profesionales comprometidos con la inclusión y los derechos humanos.</p>
+        </div>
+
+        <!-- Tipos de asesoría -->
+        <div class="asesoria-types fade-in" id="type-selector">
+            <div class="asesoria-type-card" id="type-psicologica" onclick="selectType('psicologica')">
+                <div class="asesoria-type-card__icon">🧠</div>
+                <h3 class="asesoria-type-card__title">Asesoría Psicológica</h3>
+                <p class="asesoria-type-card__desc">Apoyo emocional y orientación para superar situaciones de discriminación, acoso o exclusión.</p>
+            </div>
+            <div class="asesoria-type-card" id="type-juridica" onclick="selectType('juridica')">
+                <div class="asesoria-type-card__icon">⚖️</div>
+                <h3 class="asesoria-type-card__title">Asesoría Jurídica</h3>
+                <p class="asesoria-type-card__desc">Orientación legal sobre derechos laborales, discriminación y protección de víctimas.</p>
+            </div>
+        </div>
+
+        <!-- Profesionales disponibles -->
+        <div id="profesionales-section" style="display: none;">
+            <div class="section-header" style="margin-bottom: var(--space-6);">
+                <h2 class="section-header__title" id="profesionales-title">Profesionales disponibles</h2>
+                <p class="section-header__desc" id="profesionales-desc">Selecciona un profesional y solicita tu asesoría.</p>
+            </div>
+            <div class="profesionales-grid" id="profesionales-container">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+
+        <!-- Tabs para historial -->
+        <div style="margin-top: var(--space-10);">
+            <h2 style="font-size: var(--font-2xl); font-weight: 800; color: var(--gray-900); margin-bottom: var(--space-6);">
+                📋 Mis Asesorías
+            </h2>
+            <div id="my-asesorias-container">
+                <div id="asesorias-login-prompt" style="display: none;">
+                    <div class="empty-state">
+                        <div class="empty-state__icon">🔒</div>
+                        <h3 class="empty-state__title">Inicia sesión</h3>
+                        <p class="empty-state__desc">Necesitas una cuenta para solicitar y ver tus asesorías.</p>
+                        <a href="login.html" class="btn btn--primary btn--sm">Ingresar</a>
+                    </div>
+                </div>
+                <div class="history-list" id="asesorias-list"></div>
+                <div class="empty-state" id="asesorias-empty" style="display: none;">
+                    <div class="empty-state__icon">📋</div>
+                    <h3 class="empty-state__title">Sin asesorías aún</h3>
+                    <p class="empty-state__desc">Selecciona un tipo de asesoría arriba y solicita la tuya.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL DE SOLICITUD -->
+    <div class="modal-overlay" id="asesoria-modal">
+        <div class="modal">
+            <div class="modal__header">
+                <h3 class="modal__title" id="modal-asesoria-title">Solicitar Asesoría</h3>
+                <button class="modal__close" onclick="closeAsesoriaModal()" id="btn-close-asesoria-modal">×</button>
+            </div>
+            <div id="modal-profesional-info"></div>
+            <form id="asesoria-form" onsubmit="submitAsesoria(event)" style="margin-top: var(--space-5);">
+                <input type="hidden" id="asesoria-profesional-id">
+                <input type="hidden" id="asesoria-tipo">
+                <div class="form-group">
+                    <label class="form-label" for="asesoria-descripcion">Describe tu situación</label>
+                    <textarea class="form-input" id="asesoria-descripcion" rows="5" placeholder="Cuéntanos brevemente tu situación para que el profesional pueda prepararse para ayudarte..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn--primary btn--full" id="btn-submit-asesoria">
+                    Solicitar asesoría
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/asesorias.js"></script>
+</body>
+</html>
