@@ -67,6 +67,16 @@ async function loadPosts() {
                 </div>
             `;
         }
+    } else if (typeof DEMO_DATA !== 'undefined' && currentPage === 1) {
+        // Modo demo: mostrar publicaciones de ejemplo
+        const container = document.getElementById('feed-container');
+        const posts = DEMO_DATA.publicaciones;
+        container.innerHTML = '';
+        posts.forEach(post => {
+            container.insertAdjacentHTML('beforeend', renderPost(post));
+        });
+        const loadMoreBtn = document.getElementById('btn-load-more');
+        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
     } else {
         showToast('Error al cargar publicaciones.', 'error');
     }

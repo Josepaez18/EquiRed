@@ -61,6 +61,21 @@ async function loadProfesionales(tipo) {
         } else {
             container.innerHTML = profs.map(renderProfesionalCard).join('');
         }
+    } else if (typeof DEMO_DATA !== 'undefined') {
+        // Modo demo
+        const key = `profesionales_${tipo}`;
+        const profs = DEMO_DATA[key] || [];
+        if (profs.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state" style="grid-column: 1 / -1;">
+                    <div class="empty-state__icon">👤</div>
+                    <h3 class="empty-state__title">No hay profesionales disponibles</h3>
+                    <p class="empty-state__desc">Aún no se han registrado profesionales de este tipo.</p>
+                </div>
+            `;
+        } else {
+            container.innerHTML = profs.map(renderProfesionalCard).join('');
+        }
     } else {
         showToast('Error al cargar profesionales.', 'error');
     }

@@ -167,10 +167,20 @@ async function apiFetch(url, options = {}) {
             headers: { 'Content-Type': 'application/json' },
             ...options
         });
+
+        // Si el servidor devuelve HTML en vez de JSON (PHP no ejecutado)
+        const contentType = res.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+            console.warn('[EquiRed] API no disponible, activando modo demo.');
+            isDemoMode = true;
+            return { success: false, error: 'API no disponible (modo demo).' };
+        }
+
         const data = await res.json();
         return data;
     } catch (error) {
-        console.error('API Error:', error);
+        console.warn('[EquiRed] API no disponible, activando modo demo.');
+        isDemoMode = true;
         return { success: false, error: 'Error de conexión con el servidor.' };
     }
 }

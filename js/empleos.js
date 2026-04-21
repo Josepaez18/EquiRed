@@ -74,6 +74,27 @@ async function searchJobs() {
             container.innerHTML = jobs.map(renderJobCard).join('');
             if (empty) empty.style.display = 'none';
         }
+    } else if (typeof DEMO_DATA !== 'undefined') {
+        // Modo demo: filtrar datos locales
+        let jobs = DEMO_DATA.empleos;
+        if (search) {
+            const q = search.toLowerCase();
+            jobs = jobs.filter(j =>
+                j.titulo.toLowerCase().includes(q) ||
+                j.descripcion.toLowerCase().includes(q) ||
+                j.ubicacion.toLowerCase().includes(q)
+            );
+        }
+        if (tipo) {
+            jobs = jobs.filter(j => j.tipo_contrato === tipo);
+        }
+        if (jobs.length === 0) {
+            container.innerHTML = '';
+            if (empty) empty.style.display = '';
+        } else {
+            container.innerHTML = jobs.map(renderJobCard).join('');
+            if (empty) empty.style.display = 'none';
+        }
     } else {
         showToast('Error al cargar empleos.', 'error');
     }

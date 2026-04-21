@@ -39,31 +39,37 @@ function selectAmount(amount) {
 async function loadDonationStats() {
     const data = await apiFetch(`${API_BASE}/donaciones.php?action=stats`);
 
+    let stats;
     if (data.success) {
-        const stats = data.data;
-        document.getElementById('stat-monto-total').textContent = formatCurrency(stats.total_monto);
-        document.getElementById('stat-num-donaciones').textContent = stats.total_donaciones;
-        document.getElementById('stat-num-donantes').textContent = stats.total_donantes;
+        stats = data.data;
+    } else if (typeof DEMO_DATA !== 'undefined') {
+        stats = DEMO_DATA.donaciones_stats;
+    } else {
+        return;
+    }
 
-        // Donaciones recientes
-        const recentList = document.getElementById('recent-donations-list');
-        if (stats.recientes && stats.recientes.length > 0) {
-            recentList.innerHTML = stats.recientes.map(d => {
-                const initials = getInitials(d.donante_nombre);
-                return `
-                    <div class="recent-donation-item">
-                        <div class="recent-donation-item__avatar">${initials}</div>
-                        <div class="recent-donation-item__info">
-                            <div class="recent-donation-item__name">${d.donante_nombre}</div>
-                            <div class="recent-donation-item__msg">${d.mensaje || 'Donación solidaria'}</div>
-                        </div>
-                        <span class="recent-donation-item__amount">${formatCurrency(d.monto)}</span>
+    document.getElementById('stat-monto-total').textContent = formatCurrency(stats.total_monto);
+    document.getElementById('stat-num-donaciones').textContent = stats.total_donaciones;
+    document.getElementById('stat-num-donantes').textContent = stats.total_donantes;
+
+    // Donaciones recientes
+    const recentList = document.getElementById('recent-donations-list');
+    if (stats.recientes && stats.recientes.length > 0) {
+        recentList.innerHTML = stats.recientes.map(d => {
+            const initials = getInitials(d.donante_nombre);
+            return `
+                <div class="recent-donation-item">
+                    <div class="recent-donation-item__avatar">${initials}</div>
+                    <div class="recent-donation-item__info">
+                        <div class="recent-donation-item__name">${d.donante_nombre}</div>
+                        <div class="recent-donation-item__msg">${d.mensaje || 'Donación solidaria'}</div>
                     </div>
-                `;
-            }).join('');
-        } else {
-            recentList.innerHTML = '<p style="color: var(--gray-400); font-size: var(--font-sm); text-align: center; padding: 1rem;">Aún no hay donaciones.</p>';
-        }
+                    <span class="recent-donation-item__amount">${formatCurrency(d.monto)}</span>
+                </div>
+            `;
+        }).join('');
+    } else {
+        recentList.innerHTML = '<p style="color: var(--gray-400); font-size: var(--font-sm); text-align: center; padding: 1rem;">Aún no hay donaciones.</p>';
     }
 }
 
